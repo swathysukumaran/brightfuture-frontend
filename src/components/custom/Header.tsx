@@ -1,4 +1,3 @@
-
 import logo from "../../assets/logo.png";
 import { Button } from "../ui/button";
 import { API_URL } from "@/config/api";
@@ -31,7 +30,7 @@ function Header() {
 
   return (
     <div className=" bg-primary-bg  flex flex-col gap-1 justify-between w-full">
-      <div className="flex items-left bg-secondary-bg w-full py-4 px-2">
+      <div className="flex items-center justify-center bg-secondary-bg w-full py-4 px-2">
         <img
           src={logo}
           alt="logo"
@@ -43,7 +42,7 @@ function Header() {
         </header>
       </div>
 
-      <div className="flex gap-16 p-2  bg-secondary-bg justify-end w-full">
+      <div className="flex gap-16 p-2  bg-secondary-bg items-center justify-center w-full">
         <Link
           to="/browse"
           className="flex items-center gap-2 hover:text-primary-button"

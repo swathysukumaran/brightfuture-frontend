@@ -30,178 +30,85 @@ function LandingPage() {
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="bg-white border-b border-gray-100 sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="p-2 flex justify-between items-center ">
-              <img
-                src={logo}
-                alt="Bright Futures Tutoring"
-                className="w-auto h-12 sm:h-16 md:h-20 cursor-pointer"
-              />
-            </div>
-
-            <nav className="hidden md:flex items-center space-x-8">
-              <a
-                href="#how-it-works"
-                className="text-gray-600 hover:text-primary-700"
-              >
-                How It Works
-              </a>
-              <a
-                href="#services"
-                className="text-gray-600 hover:text-primary-700"
-              >
-                Services
-              </a>
-              <a
-                href="#tutors"
-                className="text-gray-600 hover:text-primary-700"
-              >
-                Our Tutors
-              </a>
-              <Dialog
-                open={dialogContent === "login"}
-                onOpenChange={() =>
-                  dialogContent === "login" && setDialogContent(null)
-                }
-              >
-                <DialogTrigger asChild>
-                  <Button variant="outline" onClick={openLoginDialog}>
-                    Log in
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-white text-gray-900">
-                  <DialogHeader>
-                    <DialogTitle>Log in to your account</DialogTitle>
-                    <DialogDescription>
-                      Enter your credentials to access your tutoring dashboard
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Login />
-                </DialogContent>
-              </Dialog>
-              <Dialog
-                open={dialogContent === "register"}
-                onOpenChange={() =>
-                  dialogContent === "register" && setDialogContent(null)
-                }
-              >
-                <DialogTrigger asChild>
-                  <Button
-                    onClick={openRegisterDialog}
-                    className="text-gray-600"
-                  >
-                    Sign up
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="bg-white text-gray-900">
-                  <DialogHeader>
-                    <DialogTitle>Create an account</DialogTitle>
-                    <DialogDescription>
-                      Join Bright Futures Tutoring to access personalized
-                      learning
-                    </DialogDescription>
-                  </DialogHeader>
-                  <Register
-                    onLoginClick={() => {
-                      setDialogContent("login");
-                    }}
-                  />
-                </DialogContent>
-              </Dialog>
-            </nav>
-
-            <div className="md:hidden">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                {isMenuOpen ? (
-                  <X className="h-6 w-6" />
-                ) : (
-                  <Menu className="h-6 w-6" />
-                )}
-              </Button>
-            </div>
-          </div>
-
-          {/* Mobile menu */}
-          {isMenuOpen && (
-            <div className="md:hidden mt-4 pb-4">
-              <nav className="flex flex-col space-y-4">
-                <a
-                  href="#how-it-works"
-                  className="text-gray-600 hover:text-primary-700"
-                >
-                  How It Works
-                </a>
-                <a
-                  href="#services"
-                  className="text-gray-600 hover:text-primary-700"
-                >
-                  Services
-                </a>
-                <a
-                  href="#tutors"
-                  className="text-gray-600 hover:text-primary-700"
-                >
-                  Our Tutors
-                </a>
-                <Dialog
-                  open={dialogContent === "login"}
-                  onOpenChange={() =>
-                    dialogContent === "login" && setDialogContent(null)
-                  }
-                >
-                  <DialogTrigger asChild>
-                    <Button
-                      variant="outline"
-                      className="text-gray-600 w-full"
-                      onClick={openLoginDialog}
-                    >
-                      Log in
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="bg-white text-gray-900">
-                    <DialogHeader>
-                      <DialogTitle>Log in to your account</DialogTitle>
-                      <DialogDescription>
-                        Enter your credentials to access your tutoring dashboard
-                      </DialogDescription>
-                    </DialogHeader>
-                    <Login />
-                  </DialogContent>
-                </Dialog>
-                <Dialog
-                  open={dialogContent === "register"}
-                  onOpenChange={() =>
-                    dialogContent === "register" && setDialogContent(null)
-                  }
-                >
-                  <DialogTrigger asChild>
-                    <Button className="w-full" onClick={openRegisterDialog}>
-                      Sign up
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent className="bg-white text-gray-900">
-                    <DialogHeader>
-                      <DialogTitle>Create an account</DialogTitle>
-                      <DialogDescription>
-                        Join Bright Futures Tutoring to access personalized
-                        learning
-                      </DialogDescription>
-                    </DialogHeader>
-                    <Register />
-                  </DialogContent>
-                </Dialog>
-              </nav>
-            </div>
-          )}
+      <div className=" bg-primary-bg  flex flex-col gap-1 justify-between w-full">
+        <div className="flex items-center justify-center bg-secondary-bg w-full py-4 px-2">
+          <img
+            src={logo}
+            alt="logo"
+            // Navigate to Browse Tutors
+            className="w-auto h-12 sm:h-16 md:h-20 cursor-pointer"
+          />
+          <header className="p-4 text-center font-lora text-3xl font-semibold">
+            Bright Futures Tutoring
+          </header>
         </div>
-      </header>
-      <section>
+
+        <div className="flex gap-16 p-2  bg-secondary-bg items-center justify-center w-full">
+          <nav className="hidden md:flex items-center space-x-8">
+            <Dialog
+              open={dialogContent === "login"}
+              onOpenChange={() =>
+                dialogContent === "login" && setDialogContent(null)
+              }
+            >
+              <DialogTrigger asChild>
+                <Button variant="outline" onClick={openLoginDialog}>
+                  Log in
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-white text-gray-900">
+                <DialogHeader>
+                  <DialogTitle>Log in to your account</DialogTitle>
+                  <DialogDescription>
+                    Enter your credentials to access your tutoring dashboard
+                  </DialogDescription>
+                </DialogHeader>
+                <Login />
+              </DialogContent>
+            </Dialog>
+            <Dialog
+              open={dialogContent === "register"}
+              onOpenChange={() =>
+                dialogContent === "register" && setDialogContent(null)
+              }
+            >
+              <DialogTrigger asChild>
+                <Button onClick={openRegisterDialog} className="text-gray-600">
+                  Sign up
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="bg-white text-gray-900">
+                <DialogHeader>
+                  <DialogTitle>Create an account</DialogTitle>
+                  <DialogDescription>
+                    Join Bright Futures Tutoring to access personalized learning
+                  </DialogDescription>
+                </DialogHeader>
+                <Register
+                  onLoginClick={() => {
+                    setDialogContent("login");
+                  }}
+                />
+              </DialogContent>
+            </Dialog>
+          </nav>
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </Button>
+          </div>
+        </div>
+      </div>
+
+      <section className="mt-1">
         <section className="flex flex-col md:flex-row items-center justify-between mx-auto">
           <div className="w-full md:w-1/2">
             <img src={tutorImage} alt="Student learning with a tutor" />

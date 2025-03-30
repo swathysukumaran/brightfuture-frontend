@@ -74,7 +74,6 @@ const StudentDashboard: React.FC = () => {
     "Marcus Patel": marcusPatel,
   };
 
-  // In StudentDashboard.tsx
   useEffect(() => {
     const fetchTutorsAndAppointments = async () => {
       try {
@@ -88,11 +87,26 @@ const StudentDashboard: React.FC = () => {
             credentials: "include",
           }),
         ]);
-        const tutorsData = await tutorResponse.json();
-        const appointmentsData =
-          (await appointmentResponse.json()) as AppointmentResponse[];
 
-        // Convert string dates to Date objects for appointments
+        const tutorsData = await tutorResponse.json();
+        let appointmentsData = await appointmentResponse.json();
+
+        // Add defensive checks
+        console.log("Raw appointments data:", appointmentsData);
+        console.log("Type:", typeof appointmentsData);
+        console.log("Is Array:", Array.isArray(appointmentsData));
+
+        // Ensure appointmentsData is an array
+        if (!Array.isArray(appointmentsData)) {
+          // It might be an object with a data property or some other structure
+          appointmentsData = Array.isArray(appointmentsData?.data)
+            ? appointmentsData.data
+            : [];
+
+          console.log("After conversion:", appointmentsData);
+        }
+
+        // Now safely map over the array
         const formattedAppointments = appointmentsData.map(
           (appointment: AppointmentResponse) => ({
             ...appointment,
@@ -101,10 +115,13 @@ const StudentDashboard: React.FC = () => {
           })
         );
 
-        setTutors(tutorsData);
+        setTutors(Array.isArray(tutorsData) ? tutorsData : []);
         setAppointments(formattedAppointments);
       } catch (error) {
         console.error("Error fetching data:", error);
+        // Set empty arrays on error
+        setTutors([]);
+        setAppointments([]);
       }
     };
 
@@ -177,10 +194,6 @@ const StudentDashboard: React.FC = () => {
 
   return (
     <div className="p-6 font-roboto text-text-color bg-primary-bg min-h-screen">
-      <h2 className="text-4xl font-semibold mb-8 text-center font-lora">
-        Student Dashboard
-      </h2>
-
       <div className="grid gap-6 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
         {tutors.map((tutor) => (
           <div

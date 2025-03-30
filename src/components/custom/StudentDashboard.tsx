@@ -107,14 +107,33 @@ const StudentDashboard: React.FC = () => {
         }
 
         // Now safely map over the array
+        // Update your appointment formatting to ensure valid dates
         const formattedAppointments = appointmentsData.map(
-          (appointment: AppointmentResponse) => ({
-            ...appointment,
-            start: new Date(appointment.start),
-            end: new Date(appointment.end),
-          })
-        );
+          (appointment: AppointmentResponse) => {
+            // Create proper Date objects with validation
+            const startDate = new Date(appointment.start);
+            const endDate = new Date(appointment.end);
 
+            // Ensure dates are valid
+            if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+              console.warn("Invalid date detected:", appointment);
+              // Return a safe default if dates are invalid
+              const defaultStart = new Date();
+              const defaultEnd = new Date(defaultStart.getTime() + 3600000);
+              return {
+                ...appointment,
+                start: defaultStart,
+                end: defaultEnd,
+              };
+            }
+
+            return {
+              ...appointment,
+              start: startDate,
+              end: endDate,
+            };
+          }
+        );
         setTutors(Array.isArray(tutorsData) ? tutorsData : []);
         setAppointments(formattedAppointments);
       } catch (error) {
@@ -142,10 +161,16 @@ const StudentDashboard: React.FC = () => {
     }
   };
   const eventStyleGetter = (event: Appointment) => {
+    // Ensure we're working with valid Date objects
     const eventStart =
       event.start instanceof Date ? event.start : new Date(event.start);
     const eventEnd =
       event.end instanceof Date ? event.end : new Date(event.end);
+
+    // Check if the dates are valid before comparing
+    if (isNaN(eventStart.getTime()) || isNaN(eventEnd.getTime())) {
+      return {}; // Return empty style for invalid dates
+    }
 
     if (
       selectedSlot &&
@@ -163,7 +188,6 @@ const StudentDashboard: React.FC = () => {
     }
     return {};
   };
-
   const handleBookAppointment = async () => {
     if (newAppointment && selectedTutor) {
       try {
@@ -241,6 +265,16 @@ const StudentDashboard: React.FC = () => {
                   onSelectSlot={handleSlotSelect}
                   eventPropGetter={eventStyleGetter}
                   style={{ height: 500 }}
+                  formats={{
+                    dateFormat: "D",
+                    dayFormat: "ddd D/M",
+                    monthHeaderFormat: "MMMM YYYY",
+                    dayHeaderFormat: "dddd D MMMM",
+                    dayRangeHeaderFormat: ({ start, end }) =>
+                      `${moment(start).format("MMMM D")} - ${moment(end).format(
+                        "MMMM D, YYYY"
+                      )}`,
+                  }}
                 />
                 {newAppointment && (
                   <div className="mt-4">

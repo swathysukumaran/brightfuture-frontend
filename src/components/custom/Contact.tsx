@@ -47,23 +47,25 @@ export default function AdmissionsForm() {
   };
 
   return (
-    <section className="bg-secondary-button p-6 rounded-lg max-w-lg mx-auto my-16 text-white">
-      <h2 className="text-2xl font-bold mb-2 text-center">
+    <section className="bg-secondary-button p-4 sm:p-5 md:p-6 rounded-lg w-full max-w-lg mx-auto my-6 sm:my-10 md:my-16 text-white shadow-lg">
+      <h2 className="text-xl sm:text-2xl font-bold mb-2 text-center">
         Speak To An Admissions Advisor Today
       </h2>
-      <p className="text-center mb-4">
+      <p className="text-sm sm:text-base text-center mb-4">
         Interested in learning more about CGA's online high school? Please
         complete the form below to speak with one of our Admissions Advisors.
       </p>
-      <form onSubmit={handleSubmit} className="space-y-4">
+
+      <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
+        {/* Role Selection Buttons */}
         <div className="flex justify-center gap-2">
           <button
             type="button"
             onClick={() => setFormData({ ...formData, role: "student" })}
-            className={`px-4 py-2 border rounded ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 border rounded text-sm sm:text-base transition-colors ${
               formData.role === "student"
                 ? "bg-white text-secondary-button"
-                : "bg-transparent border-white"
+                : "bg-transparent border-white hover:bg-white/10"
             }`}
           >
             Student
@@ -71,34 +73,42 @@ export default function AdmissionsForm() {
           <button
             type="button"
             onClick={() => setFormData({ ...formData, role: "guardian" })}
-            className={`px-4 py-2 border rounded ${
+            className={`px-3 py-1.5 sm:px-4 sm:py-2 border rounded text-sm sm:text-base transition-colors ${
               formData.role === "guardian"
                 ? "bg-white text-red-800"
-                : "bg-transparent border-white"
+                : "bg-transparent border-white hover:bg-white/10"
             }`}
           >
             Guardian
           </button>
         </div>
 
-        <input
-          type="text"
-          name="firstName"
-          placeholder="First Name"
-          value={formData.firstName}
-          onChange={handleChange}
-          className="w-full p-2 text-black rounded"
-          required
-        />
-        <input
-          type="text"
-          name="lastName"
-          placeholder="Last Name"
-          value={formData.lastName}
-          onChange={handleChange}
-          className="w-full p-2 text-black rounded"
-          required
-        />
+        {/* Form Grid for larger screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          {/* First Name */}
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="w-full p-2 text-black rounded"
+            required
+          />
+
+          {/* Last Name */}
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="w-full p-2 text-black rounded"
+            required
+          />
+        </div>
+
+        {/* Email and Phone */}
         <input
           type="email"
           name="email"
@@ -118,6 +128,7 @@ export default function AdmissionsForm() {
           required
         />
 
+        {/* Country Selection */}
         <select
           name="country"
           value={formData.country}
@@ -130,52 +141,63 @@ export default function AdmissionsForm() {
           <option value="Australia">Australia</option>
         </select>
 
-        <input
-          type="text"
-          name="school"
-          placeholder="Current School"
-          value={formData.school}
-          onChange={handleChange}
-          className="w-full p-2 text-black rounded"
-        />
-        <input
-          type="text"
-          name="grade"
-          placeholder="Current Grade/Year Level"
-          value={formData.grade}
-          onChange={handleChange}
-          className="w-full p-2 text-black rounded"
-        />
-
-        <label className="block">
+        {/* School and Grade in grid on larger screens */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
           <input
-            type="checkbox"
-            name="agreePolicy"
-            checked={formData.agreePolicy}
+            type="text"
+            name="school"
+            placeholder="Current School"
+            value={formData.school}
             onChange={handleChange}
-            className="mr-2"
-            required
+            className="w-full p-2 text-black rounded"
           />
-          I agree to the{" "}
-          <a href="#" className="underline">
-            privacy policy
-          </a>
-        </label>
-
-        <label className="block">
           <input
-            type="checkbox"
-            name="receiveUpdates"
-            checked={formData.receiveUpdates}
+            type="text"
+            name="grade"
+            placeholder="Current Grade/Year Level"
+            value={formData.grade}
             onChange={handleChange}
-            className="mr-2"
+            className="w-full p-2 text-black rounded"
           />
-          I want to receive study pathways, free resources, and guidance.
-        </label>
+        </div>
 
+        {/* Checkboxes */}
+        <div className="space-y-2 text-sm sm:text-base">
+          <label className="flex items-start">
+            <input
+              type="checkbox"
+              name="agreePolicy"
+              checked={formData.agreePolicy}
+              onChange={handleChange}
+              className="mr-2 mt-1"
+              required
+            />
+            <span>
+              I agree to the{" "}
+              <a href="#" className="underline hover:text-white/80">
+                privacy policy
+              </a>
+            </span>
+          </label>
+
+          <label className="flex items-start">
+            <input
+              type="checkbox"
+              name="receiveUpdates"
+              checked={formData.receiveUpdates}
+              onChange={handleChange}
+              className="mr-2 mt-1"
+            />
+            <span>
+              I want to receive study pathways, free resources, and guidance.
+            </span>
+          </label>
+        </div>
+
+        {/* Submit Button */}
         <button
           type="submit"
-          className="w-full py-2 bg-white hover:bg-secondary font-semibold rounded text-secondary-button transition-all duration-300 ease-in-out transform hover:scale-105 hover:shadow-lg"
+          className="w-full py-2 bg-white hover:bg-gray-100 font-semibold rounded text-secondary-button transition-all duration-300 ease-in-out transform hover:scale-102 hover:shadow-lg mt-4"
         >
           SUBMIT
         </button>

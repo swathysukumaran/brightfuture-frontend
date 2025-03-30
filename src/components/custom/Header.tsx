@@ -3,8 +3,12 @@ import { Button } from "../ui/button";
 import { API_URL } from "@/config/api";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useState } from "react";
+import { Menu, X } from "lucide-react";
+
 function Header() {
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const logout = async () => {
     try {
@@ -28,47 +32,100 @@ function Header() {
     }
   };
 
+  const toggleMobileMenu = () => {
+    setMobileMenuOpen(!mobileMenuOpen);
+  };
+
   return (
-    <div className=" bg-primary-bg  flex flex-col gap-1 justify-between w-full">
-      <div className="flex items-center justify-center bg-secondary-bg w-full py-4 px-2">
-        <img
-          src={logo}
-          alt="logo"
-          onClick={() => navigate("/home")} // Navigate to Browse Tutors
-          className="w-auto h-12 sm:h-16 md:h-20 cursor-pointer"
-        />
-        <header className="p-4 text-center font-lora text-3xl font-semibold">
-          Bright Futures Tutoring
-        </header>
+    <div className="bg-primary-bg w-full">
+      {/* Logo and Title */}
+      <div className="flex items-center justify-between bg-secondary-bg w-full py-3 px-4 md:py-4 md:justify-center">
+        <div className="flex items-center">
+          <img
+            src={logo}
+            alt="logo"
+            onClick={() => navigate("/home")}
+            className="w-auto h-10 sm:h-12 md:h-16 cursor-pointer"
+          />
+          <h1 className="ml-2 font-lora text-xl sm:text-2xl md:text-3xl font-semibold">
+            Bright Futures
+          </h1>
+        </div>
+
+        {/* Mobile menu button */}
+        <button
+          className="md:hidden text-primary p-1"
+          onClick={toggleMobileMenu}
+        >
+          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
 
-      <div className="flex gap-16 p-2  bg-secondary-bg items-center justify-center w-full">
+      {/* Navigation - Desktop */}
+      <div className="hidden md:flex gap-6 lg:gap-16 p-3 bg-secondary-bg items-center justify-center w-full">
         <Link
           to="/browse"
-          className="flex items-center gap-2 hover:text-primary-button"
+          className="flex items-center gap-2 hover:text-primary-button transition-colors"
         >
           Browse Tutors
         </Link>
         <Link
           to="/appointments"
-          className="flex text-primary items-center gap-2 hover:text-primary-button"
+          className="flex text-primary items-center gap-2 hover:text-primary-button transition-colors"
         >
           View Appointments
         </Link>
         <Link
           to="/contacts"
-          className="flex text-primary items-center gap-2 hover:text-primary-button"
+          className="flex text-primary items-center gap-2 hover:text-primary-button transition-colors"
         >
           Contact us
         </Link>
         <Button
           variant="ghost"
-          className="bg-secondary-button text-white hover:bg-primary-button"
+          className="bg-secondary-button text-white hover:bg-primary-button transition-colors"
           onClick={handleLogout}
         >
           Logout
         </Button>
       </div>
+
+      {/* Navigation - Mobile */}
+      {mobileMenuOpen && (
+        <div className="md:hidden flex flex-col gap-4 p-4 bg-secondary-bg shadow-md">
+          <Link
+            to="/browse"
+            className="flex items-center gap-2 py-2 border-b border-gray-200 hover:text-primary-button"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Browse Tutors
+          </Link>
+          <Link
+            to="/appointments"
+            className="flex text-primary items-center gap-2 py-2 border-b border-gray-200 hover:text-primary-button"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            View Appointments
+          </Link>
+          <Link
+            to="/contacts"
+            className="flex text-primary items-center gap-2 py-2 border-b border-gray-200 hover:text-primary-button"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Contact us
+          </Link>
+          <Button
+            variant="ghost"
+            className="mt-2 bg-secondary-button text-white hover:bg-primary-button w-full"
+            onClick={() => {
+              handleLogout();
+              setMobileMenuOpen(false);
+            }}
+          >
+            Logout
+          </Button>
+        </div>
+      )}
     </div>
   );
 }

@@ -184,22 +184,18 @@ const HomePage: React.FC = () => {
           <div className="mb-4 sm:mb-0">
             <h3 className="text-lg font-semibold mb-2">Quick Links</h3>
             <ul className="space-y-1">
-              <li>
-                <a
-                  href="/browse"
-                  className="hover:underline text-sm sm:text-base"
-                >
-                  Browse Tutors
-                </a>
-              </li>
-              <li>
-                <a
-                  href="/appointments"
-                  className="hover:underline text-sm sm:text-base"
-                >
-                  View Appointments
-                </a>
-              </li>
+              <Link
+                to="/browse"
+                className="hover:underline text-sm sm:text-base"
+              >
+                Browse Tutors
+              </Link>
+              <Link
+                to="/appointments"
+                className="hover:underline text-sm sm:text-base"
+              >
+                View Appointments
+              </Link>
             </ul>
           </div>
 

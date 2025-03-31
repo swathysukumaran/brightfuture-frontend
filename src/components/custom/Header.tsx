@@ -65,19 +65,19 @@ function Header() {
       <div className="hidden md:flex gap-6 lg:gap-16 p-3 bg-secondary-bg items-center justify-center w-full">
         <Link
           to="/browse"
-          className="flex items-center gap-2 hover:text-primary-button transition-colors"
+          className="flex items-center gap-2 hover:text-black transition-colors"
         >
           Browse Tutors
         </Link>
         <Link
           to="/appointments"
-          className="flex text-primary items-center gap-2 hover:text-primary-button transition-colors"
+          className="flex text-primary items-center gap-2 hover:text-black transition-colors"
         >
           View Appointments
         </Link>
         <Link
           to="/contacts"
-          className="flex text-primary items-center gap-2 hover:text-primary-button transition-colors"
+          className="flex text-primary items-center gap-2 hover:text-black transition-colors"
         >
           Contact us
         </Link>
